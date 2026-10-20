@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Website Care Plan Agreement</title>
+<meta name="description" content="Monthly website care plans: what is included, what is quoted, and how change requests work.">
+<meta name="theme-color" content="#14202e">
+<script>
+/* Always the newest on reload, no popup. Same pattern as the other sites:
+   deploy.sh stamps BUILD and version.json together. */
+var BUILD='0';
+(function(){
+  if(location.protocol==='file:') return;
+  window.__freshPending=true;
+  function done(){ window.__freshPending=false }
+  setTimeout(done,6000);
+  fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+    if(!j||!j.build||j.build===BUILD) return done();
+    var k='terms-fresh-'+j.build; try{ if(sessionStorage.getItem(k)) return done(); sessionStorage.setItem(k,'1'); }catch(e){}
+    var u=new URL(location.href); u.searchParams.set('v',j.build); location.replace(u.toString());
+  }).catch(done);
+})();
+</script>
+<script src="/visits/t.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#14202e; --navy-2:#1f3045; --amber:#f2b33d; --amber-2:#ffd27a;
+    --paper:#f7f5f0; --card:#ffffff; --ink:#18212b; --muted:#56616d; --line:#e2ddd2;
+    --ok:#1f7a4d; --quote:#9a5b00; --r:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font:16px/1.6 Inter,system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+  a{color:inherit}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--amber);color:var(--navy);padding:8px 14px;border-radius:8px;font-weight:600;z-index:20}
+  .skip:focus{left:8px}
+  :focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+
+  /* Draft badge: shows everywhere until the business has its real domain. */
+  .draft{position:fixed;right:14px;bottom:14px;z-index:10;background:var(--amber);color:var(--navy);
+    font:600 13px/1 Inter,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+
+  header{background:var(--navy);color:#fff;padding:56px 20px 64px;position:relative;overflow:hidden}
+  .wrap{max-width:820px;margin:0 auto}
+  .eyebrow{color:var(--amber-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:13px;margin:0 0 10px}
+  h1{font:800 clamp(30px,6vw,46px)/1.1 Archivo,sans-serif;margin:0 0 14px}
+  header p.lede{color:#c9d3de;max-width:560px;margin:0;font-size:17px}
+  /* The wire: draws itself once across the header. Decorative, hidden from screen readers. */
+  .wire{position:absolute;left:0;right:0;bottom:14px;width:100%;height:40px}
+  .wire path{fill:none;stroke:var(--amber);stroke-width:3;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s .3s ease-out forwards}
+  .wire circle{fill:var(--amber);opacity:0;animation:pop .3s 2.4s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes pop{to{opacity:1}}
+
+  main{padding:0 20px 80px}
+  section{margin-top:44px}
+  h2{font:800 26px/1.2 Archivo,sans-serif;margin:0 0 16px;color:var(--navy)}
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:-30px;position:relative}
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:0 6px 24px rgba(20,32,46,.07)}
+  .plan h3{font:800 20px/1.2 Archivo,sans-serif;margin:0}
+  .price{font:800 34px/1 Archivo,sans-serif;color:var(--navy);margin:10px 0 4px}
+  .price span{font:500 15px Inter,sans-serif;color:var(--muted)}
+  .plan ul{margin:12px 0 0;padding-left:20px}
+  .plan.plus{border:2px solid var(--amber)}
+  .tag{display:inline-block;background:var(--amber);color:var(--navy);font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
+
+  .sorter{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+  .box h3{margin:0 0 6px;font:800 18px/1.3 Archivo,sans-serif}
+  .box.in h3{color:var(--ok)} .box.q h3{color:var(--quote)}
+  .box ul{margin:6px 0 0;padding-left:20px}
+  .example{background:#eef2f6;border-left:4px solid var(--navy-2);border-radius:8px;padding:12px 16px;margin-top:14px}
+
+  ol.terms{counter-reset:t;list-style:none;padding:0;margin:0}
+  ol.terms li{counter-increment:t;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 58px;margin-bottom:10px;position:relative}
+  ol.terms li::before{content:counter(t);position:absolute;left:16px;top:15px;width:28px;height:28px;border-radius:50%;
+    background:var(--navy);color:var(--amber-2);font:800 14px/28px Archivo,sans-serif;text-align:center}
+  ol.terms strong{color:var(--navy)}
+
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+  summary{cursor:pointer;padding:15px 18px;font-weight:600;list-style:none;position:relative;padding-right:44px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:18px;top:11px;font:800 22px Archivo,sans-serif;color:var(--navy-2)}
+  details[open] summary::after{content:"\2013"}
+  details p{margin:0;padding:0 18px 16px;color:var(--muted)}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:30px 20px 70px;border-top:1px solid var(--line)}
+
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .rv.on{opacity:1;transform:none}
+  .no-js .rv{opacity:1;transform:none}
+
+  /* iPhone "Reduce Motion": everything still shows, nothing moves. */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .wire path{animation:none;stroke-dashoffset:0}
+    .wire circle{animation:none;opacity:1}
+    .rv{opacity:1;transform:none;transition:none}
+  }
+  @media print{
+    .draft,.wire,.skip{display:none}
+    header{background:none;color:#000;padding:0}
+    header p.lede{color:#333}
+    .plans{margin-top:16px}
+    .rv{opacity:1;transform:none}
+    details{border:none} details p{display:block}
+  }
+</style>
+</head>
+<body class="no-js">
+<a class="skip" href="#terms">Skip to the agreement</a>
+<div class="draft" role="note">Draft · business name coming soon</div>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">[Business Name]</p>
+    <h1>Website Care Plan Agreement</h1>
+    <p class="lede">Your website, hosted and kept up to date every month. Here is exactly what is included, what gets quoted, and how changes work.</p>
+  </div>
+  <svg class="wire" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 24 H300 Q330 24 345 10 Q360 -4 375 24 H640 Q660 24 672 34 Q684 44 696 24 H1180"/>
+    <circle cx="1186" cy="24" r="6"/>
+  </svg>
+</header>
+
+<main>
+  <div class="wrap">
+    <section aria-labelledby="plans-h">
+      <h2 id="plans-h" class="sr-only" style="position:absolute;left:-9999px">Plans</h2>
+      <div class="plans">
+        <div class="plan rv">
+          <h3>Basic</h3>
+          <p class="price">$49 <span>/ month</span></p>
+          <ul>
+            <li>Hosting</li>
+            <li>Up to 3 change requests a month</li>
+            <li>Seasonal touches</li>
+            <li>A short monthly report: visits, calls and form leads</li>
+          </ul>
+        </div>
+        <div class="plan plus rv">
+          <h3>Plus <span class="tag">Best value</span></h3>
+          <p class="price">$99 <span>/ month</span></p>
+          <ul>
+            <li>Everything in Basic</li>
+            <li>Google Business Profile care: a monthly post, new project photos and review replies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="req-h" class="rv">
+      <h2 id="req-h">How change requests work</h2>
+      <p>One request is everything you send in a single message. You get 3 a month on any plan.</p>
+      <div class="example">“New hours, new phone number, and these 6 photos” counts as <strong>one</strong> request.</div>
+      <div class="sorter" style="margin-top:16px">
+        <div class="box in">
+          <h3>Included</h3>
+          <ul>
+            <li>Text, hours, prices, phone, address and email</li>
+            <li>Adding or swapping gallery photos (about 10 a month)</li>
+            <li>Adding or removing a service or team member</li>
+            <li>Banners like “Closed for the holidays”</li>
+            <li>Seasonal themes</li>
+          </ul>
+        </div>
+        <div class="box q">
+          <h3>Quoted first</h3>
+          <ul>
+            <li>New pages or newly designed sections</li>
+            <li>New features: booking, payments, logins, forms, connections to other apps</li>
+            <li>Redesigns and logos</li>
+            <li>Writing new content from scratch</li>
+            <li>A 4th request in the same month</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:14px">Quoted work always comes with a price first. Nothing is charged until you say yes.</p>
+    </section>
+
+    <section id="terms" aria-labelledby="terms-h" class="rv">
+      <h2 id="terms-h">The agreement</h2>
+      <ol class="terms">
+        <li><strong>What you get.</strong> [Business Name] hosts your website and makes small changes to it each month, as listed below.</li>
+        <li><strong>Change requests.</strong> Your plan includes up to 3 change requests per calendar month. One request is everything you send in a single message. Unused requests do not carry over.</li>
+        <li><strong>Included changes.</strong> Updating text, hours, prices, phone, address and email. Adding or swapping photos in existing galleries or project sections, up to about 10 photos per month. Adding, removing or rewording items in existing lists, such as services or team members. Banners and announcements. Seasonal themes.</li>
+        <li><strong>Quoted work.</strong> These are not included and are quoted separately before any work starts: new pages; new sections that need new design; new features such as booking, payments, logins, new form fields or connections to other services; redesigns; logos; writing more than a short paragraph of new content; and any request past the 3rd in a month. You approve the price before work begins.</li>
+        <li><strong>Preview first.</strong> Every change is shown to you on a preview link before it goes live.</li>
+        <li><strong>Fixes.</strong> If something we built stops working, we fix it at no charge, and it does not count as a request.</li>
+        <li><strong>Turnaround.</strong> Included changes are usually done within 2 business days.</li>
+        <li><strong>Billing.</strong> The plan bills automatically each month. You can cancel any time; service runs to the end of the paid month.</li>
+        <li><strong>If you leave.</strong> You own your domain. When you cancel, we give you a copy of your website files, and you can point your domain to any host you choose.</li>
+        <li><strong>Request log.</strong> We keep a dated record of every request and how it was handled, and will share it on request.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="faq-h" class="rv">
+      <h2 id="faq-h">Questions</h2>
+      <details><summary>What counts as a change request?</summary><p>Anything you send in one message. Batch your changes together and they count as one.</p></details>
+      <details><summary>What if something breaks?</summary><p>If it is something we built, we fix it free. That never counts as a request.</p></details>
+      <details><summary>Will I see changes before they go live?</summary><p>Yes. Every change goes to a preview link first, marked so it is clear it is not live yet. It goes live after you say it looks good.</p></details>
+      <details><summary>Can I cancel?</summary><p>Any time. Service runs to the end of the month you paid for, and you get a copy of your website files.</p></details>
+      <details><summary>Who owns my domain?</summary><p>You do, always. It is registered in your name, on your account.</p></details>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>[Business Name] · Draft agreement, subject to change before signing.</p>
+</footer>
+
+<script>
+document.body.classList.remove('no-js');
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('on')}); return; }
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){ io.observe(e) });
+  /* Safety sweep: anything still hidden after 2.5s shows anyway. */
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('on') }) },2500);
+  document.querySelectorAll('details').forEach(function(d){
+    d.addEventListener('toggle',function(){ if(d.open && window.track) track('faq', d.querySelector('summary').textContent); });
+  });
+})();
+</script>
+</body>
+</html>
