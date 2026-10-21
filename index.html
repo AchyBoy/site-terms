@@ -10,7 +10,7 @@
 <script>
 /* Always the newest on reload, no popup. Same pattern as the other sites:
    deploy.sh stamps BUILD and version.json together. */
-var BUILD='20261021-152856';
+var BUILD='20261021-172350';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;
@@ -88,6 +88,9 @@ var BUILD='20261021-152856';
   .payopt p{margin:4px 0 0}
   .payopt .big{font:800 30px/1.1 Archivo,sans-serif;color:var(--navy);margin-top:8px}
   .payopt .per{font:500 15px Inter,sans-serif;color:var(--muted)}
+  .noplan{border:1px dashed var(--line);border-radius:var(--r);padding:16px 18px;margin-top:14px}
+  .noplan h3{margin:0 0 6px;font:800 17px/1.2 Archivo,sans-serif}
+  .noplan p{margin:0}
   .fine{font-size:14px;color:var(--muted);margin:12px 0 0}
   .tag{display:inline-block;background:var(--amber);color:var(--navy);font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
 
@@ -157,7 +160,7 @@ var BUILD='20261021-152856';
       <h2 id="plans-h" class="sr-only" style="position:absolute;left:-9999px">Plans</h2>
       <div class="zero rv">
         <p class="zero-big">$0 down</p>
-        <p>Get your website built with nothing up front. The build is spread over your first 12 months, added to your care plan, then you drop to the regular monthly price.</p>
+        <p>Get your website built with nothing up front. The build is spread over your first 12 months, added to your care plan, then you drop to the regular monthly price. $0 down comes with a care plan.</p>
       </div>
       <div class="plans">
         <div class="plan rv">
@@ -210,6 +213,10 @@ var BUILD='20261021-152856';
           </div>
         </div>
         <p class="fine">New features like booking, payments or logins are quoted on top. Paying up front is the better deal, since $0 down spreads the build over a year.</p>
+      </div>
+      <div class="noplan">
+        <h3>Don't want a care plan?</h3>
+        <p>That's fine. You pay for the build, half to start and half when your website goes live. You get your website files and host it on your own account, and any changes later are quoted when you need them. $0 down isn't available without a care plan, since the build is paid off through the plan.</p>
       </div>
     </section>
 
