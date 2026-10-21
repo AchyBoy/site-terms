@@ -10,7 +10,7 @@
 <script>
 /* Always the newest on reload, no popup. Same pattern as the other sites:
    deploy.sh stamps BUILD and version.json together. */
-var BUILD='20261020-085641';
+var BUILD='20261021-152856';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;
@@ -67,6 +67,28 @@ var BUILD='20261020-085641';
   .price span{font:500 15px Inter,sans-serif;color:var(--muted)}
   .plan ul{margin:12px 0 0;padding-left:20px}
   .plan.plus{border:2px solid var(--amber)}
+  .zero{background:var(--navy);color:#fff;border-radius:var(--r);padding:20px 22px;margin:-30px 0 16px;position:relative;box-shadow:0 6px 24px rgba(20,32,46,.12)}
+  .zero p{margin:0}
+  .zero .zero-big{font:800 34px/1 Archivo,sans-serif;color:var(--amber);margin:0 0 8px}
+  .zero + .plans{margin-top:0}
+  .ptable{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card);margin:12px 0}
+  .ptable div{display:flex;justify-content:space-between;gap:12px;padding:12px 16px}
+  .ptable div+div{border-top:1px solid var(--line)}
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-top:14px}
+  .calc-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .calc label{font-weight:600}
+  .step{display:flex;align-items:center;gap:10px}
+  .step button{width:44px;height:44px;border-radius:50%;border:2px solid var(--navy);background:transparent;color:var(--navy);font:700 22px/1 Inter,sans-serif;cursor:pointer}
+  .step button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .step output{font:800 28px/1 Archivo,sans-serif;min-width:2ch;text-align:center}
+  .pay{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+  .payopt{border:1px solid var(--line);border-radius:var(--r);padding:14px}
+  .payopt.zeroopt{border:2px solid var(--amber)}
+  .payopt h3{margin:0;font:800 17px/1.2 Archivo,sans-serif}
+  .payopt p{margin:4px 0 0}
+  .payopt .big{font:800 30px/1.1 Archivo,sans-serif;color:var(--navy);margin-top:8px}
+  .payopt .per{font:500 15px Inter,sans-serif;color:var(--muted)}
+  .fine{font-size:14px;color:var(--muted);margin:12px 0 0}
   .tag{display:inline-block;background:var(--amber);color:var(--navy);font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
 
   .sorter{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
@@ -107,6 +129,7 @@ var BUILD='20261020-085641';
     header{background:none;color:#000;padding:0}
     header p.lede{color:#333}
     .plans{margin-top:16px}
+    .zero{margin-top:16px}
     .rv{opacity:1;transform:none}
     details{border:none} details p{display:block}
   }
@@ -132,6 +155,10 @@ var BUILD='20261020-085641';
   <div class="wrap">
     <section aria-labelledby="plans-h">
       <h2 id="plans-h" class="sr-only" style="position:absolute;left:-9999px">Plans</h2>
+      <div class="zero rv">
+        <p class="zero-big">$0 down</p>
+        <p>Get your website built with nothing up front. The build is spread over your first 12 months, added to your care plan, then you drop to the regular monthly price.</p>
+      </div>
       <div class="plans">
         <div class="plan rv">
           <h3>Basic</h3>
@@ -151,6 +178,38 @@ var BUILD='20261020-085641';
             <li>Google Business Profile care: a monthly post, new project photos and review replies</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="build-h" class="rv">
+      <h2 id="build-h">How your website is priced</h2>
+      <p>The first page carries the design: colors, layout, phone and computer versions, Google setup and your contact form. Every page after that uses the same design, so it costs less.</p>
+      <div class="ptable" role="table" aria-label="Build price">
+        <div role="row"><span role="cell">First page, the whole design</span><strong role="cell">$350</strong></div>
+        <div role="row"><span role="cell">Each extra page</span><strong role="cell">$60</strong></div>
+      </div>
+      <div class="calc">
+        <div class="calc-row">
+          <label for="pages">How many pages?</label>
+          <div class="step">
+            <button type="button" id="pminus" aria-label="One less page">&minus;</button>
+            <output id="pages" aria-live="polite">5</output>
+            <button type="button" id="pplus" aria-label="One more page">+</button>
+          </div>
+        </div>
+        <div class="pay">
+          <div class="payopt">
+            <h3>Pay up front</h3>
+            <p class="big" id="upfront">$590</p>
+            <p>one time, then your first <strong>2 months of care free</strong></p>
+          </div>
+          <div class="payopt zeroopt">
+            <h3>$0 down</h3>
+            <p class="big"><span id="zmonth">$99</span> <span class="per">/ month</span></p>
+            <p>for 12 months on Basic, then $49</p>
+          </div>
+        </div>
+        <p class="fine">New features like booking, payments or logins are quoted on top. Paying up front is the better deal, since $0 down spreads the build over a year.</p>
       </div>
     </section>
 
@@ -194,7 +253,7 @@ var BUILD='20261020-085641';
         <li><strong>Fixes.</strong> If something we built stops working, we fix it at no charge, and it does not count as a request.</li>
         <li><strong>Turnaround.</strong> Included changes are usually done within 2 business days.</li>
         <li><strong>Billing.</strong> The plan bills automatically each month. You can cancel any time; service runs to the end of the paid month.</li>
-        <li><strong>Your website is paid for separately.</strong> Building your website is a one-time price, paid in full before it goes live. This care plan only covers hosting and changes after that. If your website was built on a $0-down monthly plan instead, that plan has a 12-month minimum, and the build is paid off over those 12 months.</li>
+        <li><strong>Your website is paid for separately.</strong> Building your website is a one-time price, paid in full before it goes live, and paying up front gets your first 2 months of care free. This care plan only covers hosting and changes after that. If your website was built on a $0-down monthly plan instead, that plan has a 12-month minimum, and the build is paid off over those 12 months.</li>
         <li><strong>If you leave.</strong> You own your domain. Once your website build is paid in full, we give you a copy of your website files when you cancel, and you can point your domain to any host you choose. If you cancel a $0-down plan before the 12 months are up, you can pay the rest of the build balance and take your files, or simply leave, and the website comes down.</li>
         <li><strong>Request log.</strong> We keep a dated record of every request and how it was handled, and will share it on request.</li>
       </ol>
@@ -227,6 +286,24 @@ document.body.classList.remove('no-js');
   document.querySelectorAll('details').forEach(function(d){
     d.addEventListener('toggle',function(){ if(d.open && window.track) track('faq', d.querySelector('summary').textContent); });
   });
+})();
+</script>
+<script>
+/* Build price calculator: $350 first page + $60 each extra; $0 down = build / 12 on top of Basic. */
+(function(){
+  var n=5, out=document.getElementById('pages'), up=document.getElementById('upfront'), zm=document.getElementById('zmonth');
+  if(!out) return;
+  function money(x){ return '$'+Math.round(x).toLocaleString('en-US'); }
+  function draw(){
+    var build=350+60*(n-1);
+    out.textContent=n;
+    up.textContent=money(build);
+    zm.textContent=money(49+Math.ceil(build/12));
+    document.getElementById('pminus').disabled=n<=1;
+  }
+  document.getElementById('pminus').onclick=function(){ if(n>1){n--;draw();} };
+  document.getElementById('pplus').onclick=function(){ if(n<25){n++;draw();} };
+  draw();
 })();
 </script>
 </body>
