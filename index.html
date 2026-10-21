@@ -10,7 +10,7 @@
 <script>
 /* Always the newest on reload, no popup. Same pattern as the other sites:
    deploy.sh stamps BUILD and version.json together. */
-var BUILD='20261021-172350';
+var BUILD='20261021-181454';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;
@@ -188,8 +188,8 @@ var BUILD='20261021-172350';
       <h2 id="build-h">How your website is priced</h2>
       <p>The first page carries the design: colors, layout, phone and computer versions, Google setup and your contact form. Every page after that uses the same design, so it costs less.</p>
       <div class="ptable" role="table" aria-label="Build price">
-        <div role="row"><span role="cell">First page, the whole design</span><strong role="cell">$350</strong></div>
-        <div role="row"><span role="cell">Each extra page</span><strong role="cell">$60</strong></div>
+        <div role="row"><span role="cell">First page, the whole design</span><strong role="cell">$400</strong></div>
+        <div role="row"><span role="cell">Each extra page</span><strong role="cell">$80</strong></div>
       </div>
       <div class="calc">
         <div class="calc-row">
@@ -203,7 +203,7 @@ var BUILD='20261021-172350';
         <div class="pay">
           <div class="payopt">
             <h3>Pay up front</h3>
-            <p class="big" id="upfront">$590</p>
+            <p class="big" id="upfront">$720</p>
             <p>one time, then your first <strong>2 months of care free</strong></p>
           </div>
           <div class="payopt zeroopt">
@@ -296,13 +296,13 @@ document.body.classList.remove('no-js');
 })();
 </script>
 <script>
-/* Build price calculator: $350 first page + $60 each extra; $0 down = build / 12 on top of Basic. */
+/* Build price calculator: $400 first page + $80 each extra; $0 down = build / 12 on top of Basic. */
 (function(){
   var n=5, out=document.getElementById('pages'), up=document.getElementById('upfront'), zm=document.getElementById('zmonth');
   if(!out) return;
   function money(x){ return '$'+Math.round(x).toLocaleString('en-US'); }
   function draw(){
-    var build=350+60*(n-1);
+    var build=400+80*(n-1);
     out.textContent=n;
     up.textContent=money(build);
     zm.textContent=money(49+Math.ceil(build/12));
